@@ -519,8 +519,20 @@ activo (`The following 1 profile is active: "prod"`).
 ### Fase 2 — Persistencia con JPA/Hibernate (30 min)
 **Rama:** `feature/persistencia-jpa`
 
-**2.1 — Entidad del ORM.** Crea `ProductoEntity` mapeada a la tabla
-`tbl_productos_base_NN` con **exactamente** estas columnas:
+**2.1 — Entidad del ORM.** Crea `ProductoEntity` mapeada a **tu** tabla.
+
+> 🏷️ **El nombre de la tabla lleva TUS DOS DÍGITOS, no tu categoría.**
+> Es siempre `tbl_productos_base_` seguido de los dos últimos dígitos de tu cédula, igual
+> para todo el curso. Tu categoría (Cacao, Café, Banano, Flores o Quinua) **no aparece en
+> el nombre**: define los *datos* que vas a sembrar dentro, en la Actividad 2.3.
+>
+> | Si tu cédula termina en… | Tu tabla se llama | ❌ NO se llama |
+> |:---:|---|---|
+> | `93` (categoría Café) | `tbl_productos_base_93` | ~~`tbl_productos_cafe`~~ · ~~`tbl_cafe_base_93`~~ |
+> | `78` (categoría Quinua) | `tbl_productos_base_78` | ~~`tbl_productos_quinua`~~ |
+> | `04` (categoría Banano) | `tbl_productos_base_04` | ~~`tbl_productos_banano`~~ |
+
+Debe tener **exactamente** estas columnas:
 
 | Columna | Tipo Java | Restricciones |
 |---------|-----------|---------------|
@@ -533,7 +545,9 @@ activo (`The following 1 profile is active: "prod"`).
 
 ```java
 @Entity
-@Table(name = "tbl_productos_base_NN")   // ← tu NN real
+// Reemplaza NN por los DOS ÚLTIMOS DÍGITOS de tu cédula.
+// Ejemplo cédula 1725840193 → @Table(name = "tbl_productos_base_93")
+@Table(name = "tbl_productos_base_NN")
 public class ProductoEntity {
 
     @Id
@@ -559,8 +573,13 @@ public class ProductoEntity {
 
 **2.3 — Siembra de datos.** Con un `CommandLineRunner` (o `@PostConstruct`), inserta al
 arrancar tus **3 productos válidos** y los **2 inválidos**
-(`precio_usd = 0` y correos vacíos), todos de tu categoría. Hazlo **idempotente**
+(`precio_usd = 0` y correos vacíos). Hazlo **idempotente**
 (`if (repository.count() == 0)`) para no duplicar en cada arranque.
+
+> 🌱 **Aquí es donde entra tu categoría.** Los 5 productos deben ser de la categoría que
+> te tocó, y la columna `categoria` de cada fila debe llevar ese nombre. Si tu categoría
+> es *Café*, siembras cafés (`Café arábigo de altura`, `Café orgánico lavado`, …) dentro
+> de la tabla `tbl_productos_base_NN` — **no** creas una tabla llamada "café".
 
 **2.4 — Evidencia.** Captura desde `psql`:
 
@@ -572,7 +591,7 @@ psql -d agrosmart_db -c "SELECT * FROM tbl_productos_base_NN;"
 > **Commit obligatorio:** `feat: agrega entidad jpa de productos y siembra de datos`
 
 **✅ Checklist de la fase**
-- [ ] La tabla se generó con el **nombre exacto** de tu semilla
+- [ ] La tabla se llama `tbl_productos_base_` + **tus dos dígitos** (no tu categoría)
 - [ ] `id_producto` es `IDENTITY`; `nombre_producto` tiene `length=120` y `unique`
 - [ ] `precio_usd` es `BigDecimal` (en PostgreSQL: `numeric(10,2)`)
 - [ ] `\d` de `psql` confirma las restricciones

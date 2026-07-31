@@ -39,6 +39,10 @@ se busca en una tabla.
 
 > ✅ **Autocomprobación:** mi puerto empieza por `81` y termina con los mismos dos
 > dígitos que el nombre de mi tabla.
+>
+> ⚠️ **La categoría no va en el nombre de la tabla.** La tabla es
+> `tbl_productos_base_` + mis dos dígitos. La categoría define los **productos que
+> siembro dentro** y la **audiencia del prompt de IA**.
 
 **Valores fijos, iguales para todo el curso:** base de datos `agrosmart_db`,
 **3 productos válidos** y **2 inválidos**.
