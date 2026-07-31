@@ -197,6 +197,21 @@ Llamaremos `NN` a esos dos dígitos. Si tu cédula es `1725840193`, entonces `NN
 | **6** o **7** | 🌹 **Flores** | Rosas de exportación | floristerías premium |
 | **8** o **9** | 🌾 **Quinua** | Quinua orgánica de altura | tiendas de alimentación saludable |
 
+### Para qué sirve cada valor
+
+Los tres son **independientes entre sí**. La categoría **no aparece** en el nombre de la
+tabla ni en el puerto: define **qué datos** guardas y **para quién** escribe la IA.
+
+| Valor | Dónde lo usas | Ejemplo con `NN = 93` (Café) |
+|-------|---------------|------------------------------|
+| **Tabla** | En `@Table(name = "...")` de tu entidad JPA | `@Table(name = "tbl_productos_base_93")` |
+| **Puerto** | En `server.port` de `application-prod.properties` | `server.port=8193` |
+| **Categoría** | En los **5 productos que siembras** y en la **audiencia del prompt de IA** | Siembras 5 cafés; el prompt usa *"cafeterías de especialidad"* |
+
+> ❌ **Error frecuente:** llamar a la tabla `tbl_productos_cafe` o `tbl_cafe_base_93`.
+> El nombre de la tabla lleva **tus dos dígitos**, nunca el nombre de la categoría.
+> Es siempre `tbl_productos_base_` + los dos dígitos, para todo el curso.
+
 ### Igual para todos
 
 | Parámetro | Valor fijo |
@@ -209,7 +224,7 @@ Llamaremos `NN` a esos dos dígitos. Si tu cédula es `1725840193`, entonces `NN
 
 ### Tres ejemplos resueltos
 
-| Cédula | `NN` | Tabla | Puerto | Último dígito | Categoría |
+| Cédula | `NN` | Tabla (lleva los **dígitos**) | Puerto | Últ. dígito | Categoría (define los **datos**) |
 |--------|:---:|-------|:---:|:---:|-----------|
 | 1725840**93** | 93 | `tbl_productos_base_93` | `8193` | 3 | ☕ Café |
 | 1712345**78** | 78 | `tbl_productos_base_78` | `8178` | 8 | 🌾 Quinua |
