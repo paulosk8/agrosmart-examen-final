@@ -96,15 +96,18 @@ de tu `IDENTIDAD.md`. No hay nada que descargar ni que calcular.
 
 Antes de que termine la sesión sincrónica, haz tu **primer commit**:
 
-1. Crea tu repositorio desde la plantilla del docente.
-2. Abre `IDENTIDAD.md` y complétalo: código del examen, tu nombre, tu cédula y tu semilla.
-3. Commit y push:
+1. Crea tu repositorio desde la plantilla del docente («Use this template»).
+2. Abre `IDENTIDAD.md` y complétalo: nombre, cédula, NRC, fecha y hora, y tu semilla.
+3. Commitea **solo ese archivo**, con **este mensaje exacto**:
 
    ```bash
    git add IDENTIDAD.md
    git commit -m "chore: registra identidad del examen"
    git push
    ```
+
+   Hazlo **antes** de generar el proyecto Spring Boot: así tu inicio queda fechado aunque
+   luego tengas problemas con las dependencias.
 
 Toma menos de 5 minutos y es lo único que se te pide en un horario fijo. Después trabajas
 a tu ritmo hasta el plazo del día siguiente.
@@ -115,7 +118,8 @@ a tu ritmo hasta el plazo del día siguiente.
 
 ### 2.3 Control 2 — Trabajo distribuido en commits
 
-- **Mínimo 9 commits** (uno por fase, como mínimo), hechos **a medida que avanzas**.
+- **Mínimo 10 commits**: 2 en la Fase 0 y al menos 1 por cada fase siguiente, hechos
+  **a medida que avanzas**.
 - **Historial lineal.** Prohibido `git push --force`, `git rebase -i` para reescribir
   fechas, y prohibido *squash* al integrar.
 - Se auditará con:
@@ -354,7 +358,7 @@ src/main/java/ec/edu/espe/agrosmart/
 
 | Fase | Contenido | Rama | Tiempo | Criterio de rúbrica |
 |:---:|-----------|------|:---:|:---:|
-| 0 | Identidad y arranque | `main` | 10 min | C8 |
+| 0 | Identidad y arranque (**2 commits**) | `main` | 10 min | C8 |
 | 1 | Configuración y perfiles | `feature/config-perfiles` | 25 min | C1 |
 | 2 | Persistencia con JPA/Hibernate | `feature/persistencia-jpa` | 30 min | C2 |
 | 3 | Modelo inmutable y lógica funcional | `feature/modelo-inmutable` | 25 min | C3 |
@@ -369,54 +373,71 @@ src/main/java/ec/edu/espe/agrosmart/
 ### Fase 0 — Identidad y arranque (10 min)
 **Rama:** `main`
 
-1. Crea un repositorio **público** en GitHub llamado `agrosmart-final-<tuapellido>`.
-2. Genera el proyecto en [start.spring.io](https://start.spring.io) con **Java 21**,
-   el build tool que prefieras (**Maven o Gradle: ambos se aceptan**) y estas
-   dependencias:
+> ⏰ Esta fase se hace **durante la sesión sincrónica**. Son **dos commits**: primero tu
+> identidad (rápido, para que quede fechada), luego el proyecto generado.
 
-   | Dependencia en start.spring.io | Para qué |
-   |--------------------------------|----------|
-   | **Spring Reactive Web** | WebFlux sobre Netty |
-   | **Spring Data JPA** | ORM Hibernate |
-   | **PostgreSQL Driver** | Conexión a la base |
-   | **Docker Compose Support** | Levanta PostgreSQL solo *(recomendado)* |
-   | **Validation** | Bean Validation |
+#### Paso 1 — Crea tu repositorio
 
-   > ⚠️ **No marques *Spring Web*.** Si aparecen a la vez *Spring Web* y *Spring
-   > Reactive Web*, Spring arranca en Tomcat y pierdes el criterio C4 completo.
+Desde la plantilla del docente, botón **«Use this template» → «Create a new repository»**.
+Nómbralo `agrosmart-final-<tuapellido>` y márcalo **Público**. Luego clónalo:
 
-3. Añade LangChain4j al `pom.xml` o `build.gradle`
-   (ver [Anexo A](#anexo-a--dependencias-de-referencia)).
-4. Crea `IDENTIDAD.md` en la raíz con esta plantilla **completada**:
-
-```markdown
-# Identidad del examen
-
-- **Nombre completo:** Apellido Apellido Nombre Nombre
-- **Cédula:** 17XXXXXXXX
-- **NRC:** XXXX
-- **Código del examen:** AGSK-2026
-- **Fecha y hora de inicio:** 2026-XX-XX HH:MM
-
-## Semilla personal calculada
-| Parámetro | Valor |
-|-----------|-------|
-| NN (2 últimos dígitos de cédula) | XX |
-| Tabla | tbl_productos_base_XX |
-| Puerto perfil prod | 81XX |
-| Último dígito de la cédula | X |
-| Categoría asignada | XXXXX |
+```bash
+git clone https://github.com/TU_USUARIO/agrosmart-final-<tuapellido>.git
+cd agrosmart-final-<tuapellido>
 ```
 
-5. Primer commit y push **antes de que termine la sesión sincrónica**:
+#### Paso 2 — Completa `IDENTIDAD.md` y haz tu PRIMER COMMIT
+
+El archivo ya está en tu repositorio. Ábrelo, rellena **todos** los campos (nombre,
+cédula, NRC, fecha y hora de inicio, y tu semilla) y commitea **solo ese archivo**:
+
+```bash
+git add IDENTIDAD.md
+git commit -m "chore: registra identidad del examen"
+git push
+```
+
+> 🔑 **Haz este commit ya, antes de generar el proyecto.** Es rápido y deja fechado tu
+> inicio dentro de la sesión. Si luego tienes problemas con start.spring.io o con las
+> dependencias, tu identidad ya está registrada.
+
+> **Commit obligatorio 1:** `chore: registra identidad del examen`
+
+#### Paso 3 — Genera el proyecto Spring Boot
+
+En [start.spring.io](https://start.spring.io), con **Java 21** y el build tool que
+prefieras (**Maven o Gradle: ambos se aceptan**):
+
+| Dependencia en start.spring.io | Para qué |
+|--------------------------------|----------|
+| **Spring Reactive Web** | WebFlux sobre Netty |
+| **Spring Data JPA** | ORM Hibernate |
+| **PostgreSQL Driver** | Conexión a la base |
+| **Docker Compose Support** | Levanta PostgreSQL solo *(recomendado)* |
+| **Validation** | Bean Validation |
+
+> ⚠️ **No marques *Spring Web*.** Si aparecen a la vez *Spring Web* y *Spring Reactive
+> Web*, Spring arranca en Tomcat y pierdes el criterio C4 completo.
+
+Descomprime el proyecto **dentro de tu repositorio** (junto a `IDENTIDAD.md`, no en una
+subcarpeta) y añade LangChain4j a tu `pom.xml` o `build.gradle`
+(ver [Anexo A](#anexo-a--dependencias-de-referencia)).
+
+#### Paso 4 — Segundo commit
 
 ```bash
 git add .
-git commit -m "chore: inicializa proyecto agrosmart y registra identidad del examen"
-git push -u origin main
+git commit -m "chore: inicializa proyecto agrosmart con webflux, jpa y langchain4j"
+git push
 ```
 
-> **Commit obligatorio:** `chore: inicializa proyecto agrosmart y registra identidad del examen`
+> **Commit obligatorio 2:** `chore: inicializa proyecto agrosmart con webflux, jpa y langchain4j`
+
+**✅ Checklist de la fase**
+- [ ] Mi repositorio es **público** y salió de «Use this template» (no de un fork)
+- [ ] `IDENTIDAD.md` está **completo** y commiteado por separado, dentro de la sesión
+- [ ] El proyecto compila (`./mvnw -DskipTests package` o `./gradlew build -x test`)
+- [ ] `pom.xml`/`build.gradle` tiene **webflux**, NO tiene *Spring Web*
 
 ---
 
@@ -1020,7 +1041,7 @@ que debes declarar en `IDENTIDAD.md` (sección *Defensa oral*) antes de cerrar l
 | **C5** | **Integración de IA con LangChain4j**<br>*(Fase 5)* | No crea el servicio de IA, o el prompt está vacío o no corresponde al indicado. | Interfaz creada con `@AiService` y `@UserMessage`, pero no mapea correctamente **ambas** variables con `@V`, o la configuración está incrustada en el código, o no hay manejo de fallo. | Uso correcto de `@AiService`, `@UserMessage` y `@V` para las dos variables; modelo **configurado por `properties`** (sin `@Bean` innecesario); llamada aislada en `boundedElastic` con `timeout` y `onErrorResume` con mensaje de respaldo. |
 | **C6** | **API reactiva con WebFlux**<br>*(Fase 6)* | El controlador no existe, retorna 404/500, o devuelve tipos bloqueantes (`List`, objeto "pelado", `block()`). | Los endpoints funcionan y devuelven `Mono`/`Flux`, pero alguna ruta no es la exacta, o los parámetros no llegan a la IA, o el "no encontrado" no responde 404, o faltan evidencias de `curl`. | Los tres endpoints funcionan en las rutas exactas devolviendo `Flux`/`Mono`; el de publicidad recibe ambas variables por URL y retorna solo el texto; el id inexistente responde **404**; evidencia con `curl` de terminal de los cuatro casos. |
 | **C7** | **Pruebas unitarias (JUnit 5 + StepVerifier)**<br>*(Fase 7)* | No hay pruebas, o se "verifica" con `System.out.println`; el proyecto no supera la ejecución de pruebas. | Pruebas parciales: omite alguna copia defensiva, o algún caso límite del `Predicate`, o cubre solo un caso del flujo, o las pruebas dependen de PostgreSQL/internet para pasar. | Cubre modelo (getters + ambas copias defensivas), `Predicate` (válido + **ambos** inválidos), flujo con `StepVerifier` en los **3** casos e IA en camino feliz y de fallo; todas con patrón **AAA**, nombres descriptivos, repositorio y modelo mockeados; pruebas en verde y aisladas. |
-| **C8** | **Proceso Git, integridad académica y documentación**<br>*(Fases 0 y 8)* | Todo subido a `main` de golpe con mensajes sin sentido; sin `IDENTIDAD.md` o incompleto; sin `DECISIONES.md`; **sin video de defensa o con enlace inaccesible**. | Usa ramas y commits, pero la estrategia es confusa o los mensajes no son semánticos; `DECISIONES.md` con justificaciones genéricas no referidas a su código; evidencias incompletas; defensa superficial. | **Una rama por fase**, ≥9 commits atómicos y semánticos que reflejan el avance real, historial lineal e integración por **Pull Request** sin squash; `IDENTIDAD.md` completo y commiteado en la sesión sincrónica; `DECISIONES.md` específico y en primera persona; evidencias completas; **defensa oral que explica correctamente `boundedElastic`, `defaultIfEmpty` vs `switchIfEmpty` y las copias defensivas**. |
+| **C8** | **Proceso Git, integridad académica y documentación**<br>*(Fases 0 y 8)* | Todo subido a `main` de golpe con mensajes sin sentido; sin `IDENTIDAD.md` o incompleto; sin `DECISIONES.md`; **sin video de defensa o con enlace inaccesible**. | Usa ramas y commits, pero la estrategia es confusa o los mensajes no son semánticos; `DECISIONES.md` con justificaciones genéricas no referidas a su código; evidencias incompletas; defensa superficial. | **Una rama por fase**, ≥10 commits atómicos y semánticos que reflejan el avance real, historial lineal e integración por **Pull Request** sin squash; `IDENTIDAD.md` completo y commiteado en la sesión sincrónica; `DECISIONES.md` específico y en primera persona; evidencias completas; **defensa oral que explica correctamente `boundedElastic`, `defaultIfEmpty` vs `switchIfEmpty` y las copias defensivas**. |
 
 ### Conversión de puntaje
 
@@ -1041,7 +1062,7 @@ que debes declarar en `IDENTIDAD.md` (sección *Defensa oral*) antes de cerrar l
 |-----------|:---:|
 | `IDENTIDAD.md` ausente o incompleto (sin cédula o sin semilla) | **−5** |
 | Primer commit realizado después de la sesión sincrónica | **−3** |
-| Menos de 9 commits, o proyecto completo subido en un único bloque de pocos minutos | **−4** y C8 baja a nivel 1 |
+| Menos de 10 commits, o proyecto completo subido en un único bloque de pocos minutos | **−4** y C8 baja a nivel 1 |
 | `git push --force`, *squash* al integrar, o fechas de author/committer incoherentes | **−5** |
 | Parámetros de semilla que no corresponden a la cédula declarada | **−5** y revisión por copia |
 | Uso de `spring-boot-starter-web` en lugar de WebFlux | **−4** y C4 baja a nivel 1 |
