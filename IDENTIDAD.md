@@ -3,11 +3,13 @@
 > ⏱️ Este archivo debe ir en tu **primer commit**, hecho **antes de que termine la sesión
 > sincrónica** del examen. Toma menos de 5 minutos y es lo único con horario fijo:
 > después trabajas a tu ritmo hasta el plazo del día siguiente.
+>
+> Completa **todos** los campos. El código del examen ya viene escrito: no lo cambies.
 
 - **Nombre completo:**
 - **Cédula:**
 - **NRC:**
-- **Nonce del examen:**            <!-- código publicado por el docente en la sesión -->
+- **Código del examen:** `AGSK-2026`
 - **Fecha y hora de inicio:**      <!-- formato: 2026-XX-XX HH:MM -->
 
 ---

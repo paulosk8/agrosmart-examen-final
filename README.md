@@ -89,20 +89,29 @@ controles son **obligatorios** y su incumplimiento tiene penalización explícit
 - Usar un asistente (ChatGPT, Copilot, Gemini, Claude…) para que **escriba tu código por   ti** está prohibido y se detecta en la defensa oral.
 - **No existe penalización por consultar documentación oficial.** Sí la hay por no poder explicar tu propio código.
 
-### 2.2 Control 1 — Commit inicial con el nonce
+### 2.2 Control 1 — Commit inicial de identidad
 
-Durante la **sesión sincrónica** el docente publica un **código aleatorio** (*nonce*),
-por ejemplo `AGS-7F4K-2026`. Antes de que termine esa sesión debes hacer tu **primer
-commit** con el archivo `IDENTIDAD.md`, que contiene ese código, tu nombre completo, tu
-cédula y tu semilla personal.
+**El código de este examen es `AGSK-2026`.** Escríbelo en el campo *Código del examen*
+de tu `IDENTIDAD.md`. No hay nada que descargar ni que calcular.
 
-Es lo único que se te pide en un horario fijo, y toma **menos de 5 minutos**: crear el
-repositorio, copiar la plantilla `IDENTIDAD.md`, llenarla y hacer `push`. Después
-trabajas a tu ritmo hasta el plazo del día siguiente.
+Antes de que termine la sesión sincrónica, haz tu **primer commit**:
 
-> Este commit es lo que ancla tu trabajo a la sesión del examen. Un repositorio cuyo
-> primer commit aparece recién al día siguiente **no acredita** haber iniciado en la
-> sesión evaluada.
+1. Crea tu repositorio desde la plantilla del docente.
+2. Abre `IDENTIDAD.md` y complétalo: código del examen, tu nombre, tu cédula y tu semilla.
+3. Commit y push:
+
+   ```bash
+   git add IDENTIDAD.md
+   git commit -m "chore: registra identidad del examen"
+   git push
+   ```
+
+Toma menos de 5 minutos y es lo único que se te pide en un horario fijo. Después trabajas
+a tu ritmo hasta el plazo del día siguiente.
+
+> 📌 **Lo que se verifica es la fecha de ese primer commit**, no el código en sí. Un
+> repositorio cuyo primer commit aparece recién al día siguiente no acredita haber
+> iniciado en la sesión evaluada.
 
 ### 2.3 Control 2 — Trabajo distribuido en commits
 
@@ -371,7 +380,7 @@ src/main/java/ec/edu/espe/agrosmart/
 - **Nombre completo:** Apellido Apellido Nombre Nombre
 - **Cédula:** 17XXXXXXXX
 - **NRC:** XXXX
-- **Nonce del examen:** AGS-XXXX-XXXX      <!-- el publicado por el docente -->
+- **Código del examen:** AGSK-2026
 - **Fecha y hora de inicio:** 2026-XX-XX HH:MM
 
 ## Semilla personal calculada
@@ -951,7 +960,7 @@ que debes declarar en `IDENTIDAD.md` (sección *Defensa oral*) antes de cerrar l
 
 | Archivo/carpeta | Contenido |
 |-----------------|-----------|
-| `IDENTIDAD.md` | Nombre, cédula, nonce, semilla calculada (commiteado en la sesión sincrónica) **y enlace al video de defensa** |
+| `IDENTIDAD.md` | Nombre, cédula, código del examen, semilla (commiteado en la sesión sincrónica) **y enlace al video de defensa** |
 | `DECISIONES.md` | Bitácora en primera persona, una entrada por fase |
 | `README.md` | Documentación de **tu** solución (no una copia de este documento) |
 | `docs/evidencias/` | Capturas de arranque, `psql`, `curl`, pruebas en verde y `git log` |
@@ -977,7 +986,7 @@ que debes declarar en `IDENTIDAD.md` (sección *Defensa oral*) antes de cerrar l
 | **C5** | **Integración de IA con LangChain4j**<br>*(Fase 5)* | No crea el servicio de IA, o el prompt está vacío o no corresponde al indicado. | Interfaz creada con `@AiService` y `@UserMessage`, pero no mapea correctamente **ambas** variables con `@V`, o la configuración está incrustada en el código, o no hay manejo de fallo. | Uso correcto de `@AiService`, `@UserMessage` y `@V` para las dos variables; modelo **configurado por `properties`** (sin `@Bean` innecesario); llamada aislada en `boundedElastic` con `timeout` y `onErrorResume` con mensaje de respaldo. |
 | **C6** | **API reactiva con WebFlux**<br>*(Fase 6)* | El controlador no existe, retorna 404/500, o devuelve tipos bloqueantes (`List`, objeto "pelado", `block()`). | Los endpoints funcionan y devuelven `Mono`/`Flux`, pero alguna ruta no es la exacta, o los parámetros no llegan a la IA, o el "no encontrado" no responde 404, o faltan evidencias de `curl`. | Los tres endpoints funcionan en las rutas exactas devolviendo `Flux`/`Mono`; el de publicidad recibe ambas variables por URL y retorna solo el texto; el id inexistente responde **404**; evidencia con `curl` de terminal de los cuatro casos. |
 | **C7** | **Pruebas unitarias (JUnit 5 + StepVerifier)**<br>*(Fase 7)* | No hay pruebas, o se "verifica" con `System.out.println`; el proyecto no supera la ejecución de pruebas. | Pruebas parciales: omite alguna copia defensiva, o algún caso límite del `Predicate`, o cubre solo un caso del flujo, o las pruebas dependen de PostgreSQL/internet para pasar. | Cubre modelo (getters + ambas copias defensivas), `Predicate` (válido + **ambos** inválidos), flujo con `StepVerifier` en los **3** casos e IA en camino feliz y de fallo; todas con patrón **AAA**, nombres descriptivos, repositorio y modelo mockeados; pruebas en verde y aisladas. |
-| **C8** | **Proceso Git, integridad académica y documentación**<br>*(Fases 0 y 8)* | Todo subido a `main` de golpe con mensajes sin sentido; sin `IDENTIDAD.md` o sin el nonce; sin `DECISIONES.md`; **sin video de defensa o con enlace inaccesible**. | Usa ramas y commits, pero la estrategia es confusa o los mensajes no son semánticos; `DECISIONES.md` con justificaciones genéricas no referidas a su código; evidencias incompletas; defensa superficial. | **Una rama por fase**, ≥9 commits atómicos y semánticos que reflejan el avance real, historial lineal e integración por **Pull Request** sin squash; `IDENTIDAD.md` con nonce commiteado en la sesión sincrónica; `DECISIONES.md` específico y en primera persona; evidencias completas; **defensa oral que explica correctamente `boundedElastic`, `defaultIfEmpty` vs `switchIfEmpty` y las copias defensivas**. |
+| **C8** | **Proceso Git, integridad académica y documentación**<br>*(Fases 0 y 8)* | Todo subido a `main` de golpe con mensajes sin sentido; sin `IDENTIDAD.md` o incompleto; sin `DECISIONES.md`; **sin video de defensa o con enlace inaccesible**. | Usa ramas y commits, pero la estrategia es confusa o los mensajes no son semánticos; `DECISIONES.md` con justificaciones genéricas no referidas a su código; evidencias incompletas; defensa superficial. | **Una rama por fase**, ≥9 commits atómicos y semánticos que reflejan el avance real, historial lineal e integración por **Pull Request** sin squash; `IDENTIDAD.md` completo y commiteado en la sesión sincrónica; `DECISIONES.md` específico y en primera persona; evidencias completas; **defensa oral que explica correctamente `boundedElastic`, `defaultIfEmpty` vs `switchIfEmpty` y las copias defensivas**. |
 
 ### Conversión de puntaje
 
@@ -996,7 +1005,7 @@ que debes declarar en `IDENTIDAD.md` (sección *Defensa oral*) antes de cerrar l
 
 | Situación | Descuento |
 |-----------|:---:|
-| `IDENTIDAD.md` ausente o sin el nonce del examen | **−5** |
+| `IDENTIDAD.md` ausente o incompleto (sin cédula o sin semilla) | **−5** |
 | Primer commit realizado después de la sesión sincrónica | **−3** |
 | Menos de 9 commits, o proyecto completo subido en un único bloque de pocos minutos | **−4** y C8 baja a nivel 1 |
 | `git push --force`, *squash* al integrar, o fechas de author/committer incoherentes | **−5** |
